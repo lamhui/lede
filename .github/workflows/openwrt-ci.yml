@@ -83,7 +83,7 @@ jobs:
           # 无论你想要对固件进行怎样的定制, 都需要且只需要修改 EOF 回环内的内容.
           # 
 
-          # 编译 ramips 7620A平台 固件:
+          # 编译ramips7620A平台固件:
           cat >> .config <<EOF
           CONFIG_TARGET_ramips=y
           CONFIG_TARGET_ramips_mt7620=y
@@ -171,10 +171,10 @@ jobs:
           EOF
 
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
-          cat >> .config <<EOF
+          # cat >> .config <<EOF
           # CONFIG_TARGET_IMAGES_PAD is not set
           # CONFIG_VMDK_IMAGES is not set
-          EOF
+          # EOF
 
           # 
           # ========================固件定制部分结束========================
