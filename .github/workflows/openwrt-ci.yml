@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI HC5861 多线多拨 SSR Plus Ngrok
+name: OpenWrt-CI HC5861 多线多拨 SSR Plus
 
 on:
   push:
@@ -53,7 +53,7 @@ jobs:
           mkdir openwrt-packages
           cd openwrt-packages
           git clone https://github.com/rosywrt/luci-theme-rosy
-          git clone https://github.com/fw876/helloworld/tree/master/luci-app-ssr-plus
+          git clone https://github.com/maxlicheng/luci-app-ssr-plus.git
           
           # sudo mkdir -p -m 777 /mnt/openwrt/bin /mnt/openwrt/build_dir/host /mnt/openwrt/build_dir/hostpkg /mnt/openwrt/dl /mnt/openwrt/feeds /mnt/openwrt/staging_dir
           # ln -s /mnt/openwrt/bin ./bin
