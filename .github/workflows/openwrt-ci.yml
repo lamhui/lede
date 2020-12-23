@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI HC5861 多线多拨 SSR Plus
+name: OpenWrt-CI HC5861 多线多拨 SSR Plus Zerotier Frpc
 
 on:
   push:
@@ -159,6 +159,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-syncdial=y
           CONFIG_PACKAGE_luci-app-frpc=y
           CONFIG_PACKAGE_luci-app-ssr-plus=y
+          CONFIG_PACKAGE_luci-app-zerotier=y
           EOF
 
           # LuCI主题:
