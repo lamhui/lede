@@ -54,6 +54,7 @@ jobs:
           cd openwrt-packages
           git clone https://github.com/rosywrt/luci-theme-rosy
           git clone https://github.com/maxlicheng/luci-app-ssr-plus.git
+          git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git
           
           # sudo mkdir -p -m 777 /mnt/openwrt/bin /mnt/openwrt/build_dir/host /mnt/openwrt/build_dir/hostpkg /mnt/openwrt/dl /mnt/openwrt/feeds /mnt/openwrt/staging_dir
           # ln -s /mnt/openwrt/bin ./bin
@@ -164,6 +165,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-nft-qos=y
           CONFIG_PACKAGE_luci-app-sqm=y
           CONFIG_PACKAGE_luci-app-ttyd=y
+          CONFIG_PACKAGE_luci-app-jd-dailybonus=y
           EOF
 
           # LuCI主题:
