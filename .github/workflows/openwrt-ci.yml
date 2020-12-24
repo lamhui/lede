@@ -54,6 +54,7 @@ jobs:
           cd openwrt-packages
           git clone https://github.com/rosywrt/luci-theme-rosy
           git clone https://github.com/maxlicheng/luci-app-ssr-plus.git
+          git clone https://github.com/lamhui/luci-app-jd-dailybonus.git
           
           
           # sudo mkdir -p -m 777 /mnt/openwrt/bin /mnt/openwrt/build_dir/host /mnt/openwrt/build_dir/hostpkg /mnt/openwrt/dl /mnt/openwrt/feeds /mnt/openwrt/staging_dir
@@ -162,6 +163,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-ssr-plus=y
           CONFIG_PACKAGE_luci-app-mwan3helper=y
           CONFIG_PACKAGE_luci-app-filetransfer=y
+          CONFIG_PACKAGE_luci-app-jd-dailybonus=y
           EOF
 
           # LuCI主题:
