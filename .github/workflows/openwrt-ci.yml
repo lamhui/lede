@@ -162,7 +162,6 @@ jobs:
           CONFIG_PACKAGE_luci-app-ssr-plus=y
           CONFIG_PACKAGE_luci-app-mwan3helper=y
           CONFIG_PACKAGE_luci-app-filetransfer=y
-          CONFIG_PACKAGE_luci-app-nft-qos=y
           CONFIG_PACKAGE_luci-app-jd-dailybonus=y
           EOF
 
