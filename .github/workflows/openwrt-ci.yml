@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI HC5861 多线多拨 SSR Plus Frpc
+name: OpenWrt-CI HC5861 多线多拨 SSR Plus Frpc TTYD QOS
 
 on:
   push:
@@ -54,8 +54,7 @@ jobs:
           cd openwrt-packages
           git clone https://github.com/rosywrt/luci-theme-rosy
           git clone https://github.com/maxlicheng/luci-app-ssr-plus.git
-          git clone https://github.com/lamhui/luci-app-jd-dailybonus.git
-          
+                    
           
           # sudo mkdir -p -m 777 /mnt/openwrt/bin /mnt/openwrt/build_dir/host /mnt/openwrt/build_dir/hostpkg /mnt/openwrt/dl /mnt/openwrt/feeds /mnt/openwrt/staging_dir
           # ln -s /mnt/openwrt/bin ./bin
@@ -163,7 +162,10 @@ jobs:
           CONFIG_PACKAGE_luci-app-ssr-plus=y
           CONFIG_PACKAGE_luci-app-mwan3helper=y
           CONFIG_PACKAGE_luci-app-filetransfer=y
-          CONFIG_PACKAGE_luci-app-jd-dailybonus=y
+          CONFIG_PACKAGE_luci-app-nft-qos=y
+          CONFIG_PACKAGE_luci-app-qos=y
+          CONFIG_PACKAGE_luci-app-sqm=y
+          CONFIG_PACKAGE_luci-app-ttyd=y
           EOF
 
           # LuCI主题:
