@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI HC5861 多线多拨 SSR Plus Frpc TTYD QOS
+name: OpenWrt-CI HC5861 多线多拨 SSR Plus Frpc TTYD QosNftables版
 
 on:
   push:
@@ -163,8 +163,6 @@ jobs:
           CONFIG_PACKAGE_luci-app-mwan3helper=y
           CONFIG_PACKAGE_luci-app-filetransfer=y
           CONFIG_PACKAGE_luci-app-nft-qos=y
-          CONFIG_PACKAGE_luci-app-qos=y
-          CONFIG_PACKAGE_luci-app-sqm=y
           CONFIG_PACKAGE_luci-app-ttyd=y
           EOF
 
