@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI HC5861 多线多拨 SSR Plus Frpc TTYD QosNftables版
+name: OpenWrt-CI HC5861 多线多拨 SSR Plus Frpc TTYD QosNftables版 不添加FTP服务器 不添加解除网易云音乐
 
 on:
   push:
