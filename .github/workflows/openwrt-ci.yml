@@ -164,6 +164,8 @@ jobs:
           CONFIG_PACKAGE_luci-app-filetransfer=y
           CONFIG_PACKAGE_luci-app-nft-qos=y
           CONFIG_PACKAGE_luci-app-ttyd=y
+          # CONFIG_PACKAGE_luci-app-unblockmusic is not set
+          # CONFIG_PACKAGE_luci-app-vsftpd is not set
           EOF
 
           # LuCI主题:
