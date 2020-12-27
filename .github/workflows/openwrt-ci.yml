@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI HC5861 多拨 SSR Frpc TTYD Qos No FTP & 网易云 No USB & DDNS & IPV6 
+name: OpenWrt-CI HC5861 多拨 SSR Frpc TTYD Qos No FTP & No USB & DDNS & IPV6 
 
 on:
   push:
@@ -164,7 +164,6 @@ jobs:
           CONFIG_PACKAGE_luci-app-filetransfer=y
           CONFIG_PACKAGE_luci-app-nft-qos=y
           CONFIG_PACKAGE_luci-app-ttyd=y
-          # CONFIG_PACKAGE_luci-app-unblockmusic is not set
           # CONFIG_PACKAGE_luci-app-vsftpd is not set
           # CONFIG_PACKAGE_luci-app-vlmcsd is not set
           # CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn is not set
