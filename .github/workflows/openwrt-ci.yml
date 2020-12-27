@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI HC5861 多线多拨 SSR Plus Frpc TTYD QosNftables版 不添加FTP服务器 不添加解除网易云音乐
+name: OpenWrt-CI HC5861 多拨 SSR Frpc TTYD Qos No FTP & 网易云 No USB & DDNS & IPV6 
 
 on:
   push:
@@ -125,13 +125,13 @@ jobs:
 
           # 编译UEFI固件:
           # cat >> .config <<EOF
-          # CONFIG_EFI_IMAGES=y
+          # CONFIG_EFI_IMAGES is not set
           # EOF
 
           # IPv6支持:
           # cat >> .config <<EOF
-          # CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
-          # CONFIG_PACKAGE_ipv6helper=y
+          # CONFIG_PACKAGE_dnsmasq_full_dhcpv6 is not set
+          # CONFIG_PACKAGE_ipv6helper is not set
           # EOF
 
           # 多文件系统支持:
@@ -146,11 +146,11 @@ jobs:
 
           # USB3.0支持:
           # cat >> .config <<EOF
-          # CONFIG_PACKAGE_kmod-usb-ohci=y
-          # CONFIG_PACKAGE_kmod-usb-ohci-pci=y
-          # CONFIG_PACKAGE_kmod-usb2=y
-          # CONFIG_PACKAGE_kmod-usb2-pci=y
-          # CONFIG_PACKAGE_kmod-usb3=y
+          # CONFIG_PACKAGE_kmod-usb-ohci is not set
+          # CONFIG_PACKAGE_kmod-usb-ohci-pci is not set
+          # CONFIG_PACKAGE_kmod-usb2 is not set
+          # CONFIG_PACKAGE_kmod-usb2-pci is not set
+          # CONFIG_PACKAGE_kmod-usb3 is not set
           # EOF
 
           # 常用LuCI插件选择:
@@ -166,6 +166,24 @@ jobs:
           CONFIG_PACKAGE_luci-app-ttyd=y
           # CONFIG_PACKAGE_luci-app-unblockmusic is not set
           # CONFIG_PACKAGE_luci-app-vsftpd is not set
+          # CONFIG_PACKAGE_luci-app-vlmcsd is not set
+          # CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn is not set
+          # CONFIG_PACKAGE_luci-app-ddns is not set
+          # CONFIG_PACKAGE_ddns-scripts_aliyun is not set
+          # CONFIG_PACKAGE_luci-app-ddns is not set
+          # CONFIG_PACKAGE_luci-i18n-ddns-zh-cn is not set
+          # CONFIG_PACKAGE_ddns-scripts is not set
+          # CONFIG_PACKAGE_ddns-scripts_aliyun is not set
+          # CONFIG_PACKAGE_ddns-scripts_dnspod is not set
+          # CONFIG_PACKAGE_pdnsd-alt is not set
+          EOF
+          
+          # 默认配置是否有安装插件或脚本:
+          cat >> .config <<EOF          
+          # CONFIG_DEFAULT_luci-app-vlmcsd is not set
+          # CONFIG_DEFAULT_ddns-scripts_aliyun is not set
+          # CONFIG_DEFAULT_ddns-scripts_dnspod is not set
+          # CONFIG_DEFAULT_luci-app-ddns is not set
           EOF
 
           # LuCI主题:
