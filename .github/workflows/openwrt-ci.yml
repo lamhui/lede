@@ -53,6 +53,8 @@ jobs:
           mkdir openwrt-packages
           cd openwrt-packages
           git clone https://github.com/rosywrt/luci-theme-rosy
+          git clone https://github.com/jerrykuku/node-request.git
+          git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git
           # git clone https://github.com/maxlicheng/luci-app-ssr-plus.git is not set
                              
           
@@ -120,7 +122,38 @@ jobs:
 
           # 固件压缩:
           cat >> .config <<EOF
-          CONFIG_TARGET_IMAGES_GZIP=y
+          # Target Images
+          #
+          CONFIG_TARGET_ROOTFS_INITRAMFS=y
+          # CONFIG_TARGET_INITRAMFS_COMPRESSION_NONE is not set
+          # CONFIG_TARGET_INITRAMFS_COMPRESSION_GZIP is not set
+          # CONFIG_TARGET_INITRAMFS_COMPRESSION_BZIP2 is not set
+          CONFIG_TARGET_INITRAMFS_COMPRESSION_LZMA=y
+          # CONFIG_TARGET_INITRAMFS_COMPRESSION_LZO is not set
+          # CONFIG_TARGET_INITRAMFS_COMPRESSION_LZ4 is not set
+          # CONFIG_TARGET_INITRAMFS_COMPRESSION_XZ is not set
+          CONFIG_EXTERNAL_CPIO=""
+          # CONFIG_TARGET_INITRAMFS_FORCE is not set
+
+          #
+          # Root filesystem archives
+          #
+          # CONFIG_TARGET_ROOTFS_CPIOGZ is not set
+          # CONFIG_TARGET_ROOTFS_TARGZ is not set
+
+          #
+          # Root filesystem images
+          #
+          # CONFIG_TARGET_ROOTFS_EXT4FS is not set
+          CONFIG_TARGET_ROOTFS_SQUASHFS=y
+          CONFIG_TARGET_SQUASHFS_BLOCK_SIZE=256
+          CONFIG_TARGET_UBIFS_FREE_SPACE_FIXUP=y
+          CONFIG_TARGET_UBIFS_JOURNAL_SIZE=""
+
+          #
+          # Image Options
+          #
+          # end of Target Images
           EOF
 
           # 编译UEFI固件:
@@ -201,6 +234,27 @@ jobs:
           CONFIG_PACKAGE_tree=y
           CONFIG_PACKAGE_vim-fuller=y
           CONFIG_PACKAGE_wget=y
+          EOF
+
+          # Node.js
+          #
+          cat >>.config <<EOF
+          CONFIG_PACKAGE_node=y
+          CONFIG_NODEJS_ICU_NONE=y
+          # CONFIG_NODEJS_ICU_SMALL is not set
+          # CONFIG_PACKAGE_node-arduino-firmata is not set
+          # CONFIG_PACKAGE_node-cylon is not set
+          # CONFIG_PACKAGE_node-cylon-firmata is not set
+          # CONFIG_PACKAGE_node-cylon-gpio is not set
+          # CONFIG_PACKAGE_node-cylon-i2c is not set
+          # CONFIG_PACKAGE_node-hid is not set
+          # CONFIG_PACKAGE_node-homebridge is not set
+          # CONFIG_PACKAGE_node-javascript-obfuscator is not set
+          # CONFIG_PACKAGE_node-npm is not set
+          # CONFIG_PACKAGE_node-request is not set
+          # CONFIG_PACKAGE_node-serialport is not set
+          # CONFIG_PACKAGE_node-serialport-bindings is not set
+          # end of Node.js
           EOF
 
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
