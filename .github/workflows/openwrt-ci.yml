@@ -10,8 +10,8 @@
 name: OpenWrt-CI
 
 on:
-    push:
-      branches: 
+  push:
+    branches: 
         - master
   # schedule:
   #   - cron: 0 20 * * *
@@ -62,7 +62,7 @@ jobs:
           cd package
           mkdir openwrt-packages
           cd openwrt-packages
-          git clone https://github.com/rosywrt/luci-theme-rosy
+          git clone https://github.com/rosywrt/luci-theme-rosy.git
           # git clone https://github.com/maxlicheng/luci-app-ssr-plus.git is not set
 
       - name: Update feeds
@@ -176,8 +176,8 @@ jobs:
           # CONFIG_PACKAGE_luci-app-accesscontrol is not set
           # CONFIG_PACKAGE_luci-app-unblockmusic is not set
           CONFIG_PACKAGE_luci-app-jd-dailybonus=y
-          # EOF
-	  
+          # EOF          
+            
 	  # 默认配置是否有安装插件或脚本:
           # cat >> .config <<EOF          
           # CONFIG_DEFAULT_luci-app-vlmcsd is not set
@@ -185,13 +185,14 @@ jobs:
           # CONFIG_DEFAULT_ddns-scripts_dnspod is not set
           # CONFIG_DEFAULT_luci-app-ddns is not set
           # EOF
-
-          # LuCI主题:
+	  
+	  # LuCI主题:
 	  cat >> .config <<EOF
-	  # CONFIG_PACKAGE_luci-theme-netgear is not set
-	  CONFIG_PACKAGE_luci-theme-rosy=y
+	  CONFIG_PACKAGE_luci-theme-argon is not set
+	  CONFIG_PACKAGE_luci-theme-netgear is not set
+          CONFIG_PACKAGE_luci-theme-rosy=y
           EOF
-
+	  
           # 常用软件包:
           # cat >> .config <<EOF
           # CONFIG_PACKAGE_curl=y
