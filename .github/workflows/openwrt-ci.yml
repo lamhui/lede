@@ -177,7 +177,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-unblockmusic is not set
           CONFIG_PACKAGE_luci-app-jd-dailybonus=y
           # EOF
-          
+	  
 	  # 默认配置是否有安装插件或脚本:
           # cat >> .config <<EOF          
           # CONFIG_DEFAULT_luci-app-vlmcsd is not set
