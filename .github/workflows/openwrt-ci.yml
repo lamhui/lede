@@ -187,9 +187,9 @@ jobs:
           # EOF
 
           # LuCI主题:
-          cat >> .config <<EOF
-          # CONFIG_PACKAGE_luci-theme-netgear is not set
-          CONFIG_PACKAGE_luci-theme-rosy=y
+	  cat >> .config <<EOF
+	  # CONFIG_PACKAGE_luci-theme-netgear is not set
+	  CONFIG_PACKAGE_luci-theme-rosy=y
           EOF
 
           # 常用软件包:
@@ -204,7 +204,6 @@ jobs:
           # EOF
           
 	  # Node.js
-          #
           cat >>.config <<EOF
           CONFIG_PACKAGE_node=y
           CONFIG_NODEJS_ICU_NONE=y
