@@ -2,84 +2,78 @@
 # This is free software, lisence use MIT.
 # 
 # Copyright (C) 2019 P3TERX <https://p3terx.com>
-# Copyright (C) 2020 KFERMercer <KFER.Mercer@gmail.com>
+# Copyright (C) 2019 KFERMercer <KFER.Mercer@gmail.com>
 # 
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI HC5861 不含网易云 只有 Frpc TTYD 京东插件让步版本 
+name: OpenWrt-CI
 
-on:
-  push:
-    branches: 
+#on:
+  #push:
+    #branches: 
       - master
   # schedule:
   #   - cron: 0 20 * * *
-  release:
-    types: [published]
+  # release:
+  #   types: [published]
 
 jobs:
-
-  build_openwrt:
-
-    name: Build OpenWrt firmware
-
+  build:
     runs-on: ubuntu-latest
 
-    if: github.event.repository.owner.id == github.event.sender.id
-
     steps:
-
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
         with:
           ref: master
 
-      - name: Space cleanup
+      - name: Initialization environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           docker rmi `docker images -q`
-          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
-          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php* android*
+          echo "Deleting files, please wait ..."
+          sudo rm -rf \
+            /usr/share/dotnet \
+            /etc/mysql \
+            /etc/php
+          sudo -E apt-get -y purge \
+            azure-cli \
+            ghc* \
+            zulu* \
+            hhvm \
+            llvm* \
+            firefox \
+            google* \
+            dotnet* \
+            powershell \
+            openjdk* \
+            mysql* \
+            php*
           sudo -E apt-get update
-          sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs gcc-multilib g++-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler antlr3 gperf swig libtinfo5
+          sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
-          
-      - name: 自定义插件主题。
+		  
+	  - name: 自定义插件主题。
         run: |
           cd package
           mkdir openwrt-packages
           cd openwrt-packages
           git clone https://github.com/rosywrt/luci-theme-rosy
-          git clone https://github.com/jerrykuku/node-request.git
-          git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git
           # git clone https://github.com/maxlicheng/luci-app-ssr-plus.git is not set
-                             
-          
-          # sudo mkdir -p -m 777 /mnt/openwrt/bin /mnt/openwrt/build_dir/host /mnt/openwrt/build_dir/hostpkg /mnt/openwrt/dl /mnt/openwrt/feeds /mnt/openwrt/staging_dir
-          # ln -s /mnt/openwrt/bin ./bin
-          # mkdir -p ./build_dir
-          # ln -s -f /mnt/openwrt/build_dir/host ./build_dir/host
-          # ln -s -f /mnt/openwrt/build_dir/hostpkg ./build_dir/hostpkg
-          # ln -s /mnt/openwrt/dl ./dl
-          # ln -s /mnt/openwrt/feeds ./feeds
-          # ln -s /mnt/openwrt/staging_dir ./staging_dir
-
-          df -h
 
       - name: Update feeds
         run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Generate configuration file
+      - name: Costom configure file
         run: |
           rm -f ./.config*
           touch ./.config
 
-          
           #
           # ========================固件定制部分========================
           # 
@@ -119,8 +113,8 @@ jobs:
           CONFIG_TARGET_ramips_mt7620=y
           CONFIG_TARGET_ramips_mt7620_DEVICE_hiwifi_hc5861=y
           EOF
-
-          # 固件压缩:
+          
+		  # 固件压缩:
           cat >> .config <<EOF
           # Target Images
           #
@@ -134,40 +128,38 @@ jobs:
           # CONFIG_TARGET_INITRAMFS_COMPRESSION_XZ is not set
           CONFIG_EXTERNAL_CPIO=""
           # CONFIG_TARGET_INITRAMFS_FORCE is not set
-
           #
           # Root filesystem archives
           #
           # CONFIG_TARGET_ROOTFS_CPIOGZ is not set
           # CONFIG_TARGET_ROOTFS_TARGZ is not set
-
           #
           # Root filesystem images
           #
-          # CONFIG_TARGET_ROOTFS_EXT4FS is not set
+          
+		  # CONFIG_TARGET_ROOTFS_EXT4FS is not set
           CONFIG_TARGET_ROOTFS_SQUASHFS=y
           CONFIG_TARGET_SQUASHFS_BLOCK_SIZE=256
           CONFIG_TARGET_UBIFS_FREE_SPACE_FIXUP=y
           CONFIG_TARGET_UBIFS_JOURNAL_SIZE=""
-
-          #
+          
+		  #
           # Image Options
           #
           # end of Target Images
           EOF
-
-          # 编译UEFI固件:
+          		  
+		  # 编译UEFI固件:
           # cat >> .config <<EOF
           # CONFIG_EFI_IMAGES is not set
           # EOF
-
           # IPv6支持:
           # cat >> .config <<EOF
           # CONFIG_PACKAGE_dnsmasq_full_dhcpv6 is not set
           # CONFIG_PACKAGE_ipv6helper is not set
           # EOF
-
-          # 多文件系统支持:
+          		  
+		  # 多文件系统支持:
           # cat >> .config <<EOF
           # CONFIG_PACKAGE_kmod-fs-nfs=y
           # CONFIG_PACKAGE_kmod-fs-nfs-common=y
@@ -176,8 +168,8 @@ jobs:
           # CONFIG_PACKAGE_kmod-fs-ntfs=y
           # CONFIG_PACKAGE_kmod-fs-squashfs=y
           # EOF
-
-          # USB3.0支持:
+          		  
+		  # USB3.0支持:
           # cat >> .config <<EOF
           # CONFIG_PACKAGE_kmod-usb-ohci is not set
           # CONFIG_PACKAGE_kmod-usb-ohci-pci is not set
@@ -185,8 +177,9 @@ jobs:
           # CONFIG_PACKAGE_kmod-usb2-pci is not set
           # CONFIG_PACKAGE_kmod-usb3 is not set
           # EOF
-
-          # 常用LuCI插件选择:
+          
+		  
+		  # 常用LuCI插件选择:
           cat >> .config <<EOF
           CONFIG_PACKAGE_luci-app-webadmin=y
           CONFIG_PACKAGE_luci-app-wrtbwmon=y
@@ -212,6 +205,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-unblockmusic is not set
           EOF
           
+		  
           # 默认配置是否有安装插件或脚本:
           cat >> .config <<EOF          
           # CONFIG_DEFAULT_luci-app-vlmcsd is not set
@@ -219,14 +213,14 @@ jobs:
           # CONFIG_DEFAULT_ddns-scripts_dnspod is not set
           # CONFIG_DEFAULT_luci-app-ddns is not set
           EOF
-
-          # LuCI主题:
+          
+		  # LuCI主题:
           cat >> .config <<EOF
           # CONFIG_PACKAGE_luci-theme-netgear is not set
           CONFIG_PACKAGE_luci-theme-rosy=y
           EOF
-
-          # 常用软件包:
+          
+		  # 常用软件包:
           cat >> .config <<EOF
           CONFIG_PACKAGE_curl=y
           CONFIG_PACKAGE_htop=y
@@ -235,8 +229,9 @@ jobs:
           CONFIG_PACKAGE_vim-fuller=y
           CONFIG_PACKAGE_wget=y
           EOF
-
-          # Node.js
+          
+		  
+		  # Node.js
           #
           cat >>.config <<EOF
           CONFIG_PACKAGE_node=y
@@ -256,70 +251,41 @@ jobs:
           # CONFIG_PACKAGE_node-serialport-bindings is not set
           # end of Node.js
           EOF
+		  
 
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
-          cat >> .config <<EOF
-          # CONFIG_TARGET_IMAGES_PAD is not set
-          # CONFIG_VMDK_IMAGES is not set
-          EOF
+          # cat >> .config <<EOF
+          # # CONFIG_TARGET_IMAGES_PAD is not set
+          # # CONFIG_VMDK_IMAGES is not set
+          # EOF
 
           # 
           # ========================固件定制部分结束========================
           # 
-          
+
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
 
       - name: Make download
         run: |
-          make download -j8 || make download -j1 V=s
-          rm -rf $(find ./dl/ -size -1024c)
-          df -h
+          make download -j8
+          find dl -size -1024c -exec ls -l {} \;
+          find dl -size -1024c -exec rm -f {} \;
 
       - name: Compile firmware
         run: |
-          make -j$(nproc) || make -j1 V=s
-          echo "======================="
-          echo "Space usage:"
-          echo "======================="
-          df -h
-          echo "======================="
-          du -h ./ --max-depth=1
-          du -h /mnt/openwrt/ --max-depth=1 || true
+          echo -e "$(nproc) thread build."
+          make -j$(nproc) V=s
 
-      - name: Prepare artifact
+      - name: Assemble artifact
         run: |
-          mkdir -p ./artifact/firmware
-          mkdir -p ./artifact/package
-          mkdir -p ./artifact/buildinfo
-          rm -rf $(find ./bin/targets/ -type d -name "packages")
-          cp -rf $(find ./bin/targets/ -type f) ./artifact/firmware/
-          cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
-          cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
+          rm -rf ./artifact/
+          mkdir -p ./artifact/
+          find ./bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./artifact/
+          find ./bin/targets/ -name "*sysupgrade*bin*" | xargs -i mv -f {} ./artifact/
 
-      - name: Deliver buildinfo
-        uses: actions/upload-artifact@v2
+      - name: Upload artifact
+        uses: actions/upload-artifact@master
         with:
-          name: OpenWrt_buildinfo
-          path: ./artifact/buildinfo/
-
-      - name: Deliver package
-        uses: actions/upload-artifact@v2
-        with:
-          name: OpenWrt_package
-          path: ./artifact/package/
-
-      - name: Deliver firmware
-        uses: actions/upload-artifact@v2
-        with:
-          name: OpenWrt_firmware
-          path: ./bin/targets/
-
-      - name: Upload release asset
-        if: github.event == 'release'
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.YOURTOKEN }}
-          file: ./artifact/firmware/*
-          tag: ${{ github.ref }}
-          file_glob: true
+          name: OpenWrt firmware
+          path: ./artifact/
