@@ -114,8 +114,7 @@ jobs:
           CONFIG_TARGET_ramips_mt7620=y
           CONFIG_TARGET_ramips_mt7620_DEVICE_hiwifi_hc5861=y
           EOF
-          
-          
+                      
 	  # 固件压缩:
           cat >> .config <<EOF
           # Target Images
@@ -151,8 +150,7 @@ jobs:
           #
           # end of Target Images
           EOF
-          
-          		  
+                    		  
           # 编译UEFI固件:
           # cat >> .config <<EOF
           # CONFIG_EFI_IMAGES is not set
@@ -162,8 +160,7 @@ jobs:
           # CONFIG_PACKAGE_dnsmasq_full_dhcpv6 is not set
           # CONFIG_PACKAGE_ipv6helper is not set
           # EOF
-          
-          		  
+                    		  
 	  # 多文件系统支持:
           # cat >> .config <<EOF
           # CONFIG_PACKAGE_kmod-fs-nfs=y
@@ -173,8 +170,7 @@ jobs:
           # CONFIG_PACKAGE_kmod-fs-ntfs=y
           # CONFIG_PACKAGE_kmod-fs-squashfs=y
           # EOF
-          
-          		  
+                    		  
 	  # USB3.0支持:
           # cat >> .config <<EOF
           # CONFIG_PACKAGE_kmod-usb-ohci is not set
@@ -183,8 +179,7 @@ jobs:
           # CONFIG_PACKAGE_kmod-usb2-pci is not set
           # CONFIG_PACKAGE_kmod-usb3 is not set
           # EOF
-          
-		  
+          		  
 	  # 常用LuCI插件选择:
           cat >> .config <<EOF
           CONFIG_PACKAGE_luci-app-webadmin=y
@@ -211,8 +206,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-unblockmusic is not set
           CONFIG_PACKAGE_luci-app-jd-dailybonus=y
           EOF
-          
-		  
+          		  
           # 默认配置是否有安装插件或脚本:
           cat >> .config <<EOF          
           # CONFIG_DEFAULT_luci-app-vlmcsd is not set
@@ -220,15 +214,13 @@ jobs:
           # CONFIG_DEFAULT_ddns-scripts_dnspod is not set
           # CONFIG_DEFAULT_luci-app-ddns is not set
           EOF
-          
-          
+                   
 	  # LuCI主题:
           cat >> .config <<EOF
           # CONFIG_PACKAGE_luci-theme-netgear is not set
           CONFIG_PACKAGE_luci-theme-rosy=y
           EOF
-          
-          
+                    
 	  # 常用软件包:
           cat >> .config <<EOF
           CONFIG_PACKAGE_curl=y
@@ -238,8 +230,7 @@ jobs:
           CONFIG_PACKAGE_vim-fuller=y
           CONFIG_PACKAGE_wget=y
           EOF
-          
-		  
+          		  
 	  # Node.js
           #
           cat >>.config <<EOF
@@ -260,9 +251,9 @@ jobs:
           # CONFIG_PACKAGE_node-serialport-bindings is not set
           # end of Node.js
           EOF
-		  
-
-          # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
+          	
+	
+	  # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
           # cat >> .config <<EOF
           # # CONFIG_TARGET_IMAGES_PAD is not set
           # # CONFIG_VMDK_IMAGES is not set
